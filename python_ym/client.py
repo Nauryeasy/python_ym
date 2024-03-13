@@ -1,7 +1,7 @@
 import requests
 
-import api_objects
-import config
+from . import api_objects
+from . import config
 
 
 class Client:
