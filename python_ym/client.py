@@ -48,7 +48,8 @@ class Client:
 
         return warehouses
 
-    def get_orders_data(self, business_id: int, campaign_id: int, all: bool = False,  orders_ids: list[int] = None) -> list[api_objects.OrderData]:
+    def get_orders_data(self, business_id: int, campaign_id: int, all: bool = False,  orders_ids: list[int] = None) -> list[
+        api_objects.OrderData]:
         """
         :param campaign_id: Shop id. Can be obtained in your personal account or using the get_campaigns method
         :param orders_ids: List of order IDs
