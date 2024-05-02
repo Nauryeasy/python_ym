@@ -4,9 +4,17 @@ from .api_object import ApiObject
 Отчет по товарам
 """
 
+
 class ProductData(ApiObject):
+    class Tariff(ApiObject):
+        type: str = None
+        amount: float = None
+
+        def __init__(self, data):
+            super().__init__(data)
 
     class WarehouseOfProductData(ApiObject):
+
         class Stock(ApiObject):
             type: str = None
             count: int = None
@@ -28,6 +36,7 @@ class ProductData(ApiObject):
     categoryId: int = None
     categoryName: str = None
     warehouses: list[WarehouseOfProductData] = None
+    tariffs: list[Tariff] = None
 
     def __init__(self, data):
         super().__init__(data)

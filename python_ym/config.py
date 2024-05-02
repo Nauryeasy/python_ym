@@ -8,6 +8,8 @@ class ApiConfig:
     __ORDER_DATA_ENDPOINT = 'campaigns/{campaignId}/stats/orders'
     __WAREHOUSE_ENDPOINT = 'warehouses'
     __PRODUCTDATA_ENDPOINT = 'campaigns/{campaignId}/stats/skus'
+    __RECOMMENDATIONS_PRICES_ENDPOINT = '/businesses/{businessId}/offers/recommendations'
+    __PRICES_OF_PROMOTION_ENDPOINT = '/campaigns/{campaignId}/offer-prices/suggestions'
 
     def get_product_endpoint(self):
         return self.__BASE_URL + self.__PRODUCT_ENDPOINT
@@ -29,3 +31,9 @@ class ApiConfig:
 
     def get_productdata_endpoint(self):
         return self.__BASE_URL + self.__PRODUCTDATA_ENDPOINT
+
+    def get_recommendations_prices_endpoint(self):
+        return self.__BASE_URL + self.__RECOMMENDATIONS_PRICES_ENDPOINT
+
+    def get_prices_of_promotion_endpoint(self):
+        return self.__BASE_URL + self.__PRICES_OF_PROMOTION_ENDPOINT
