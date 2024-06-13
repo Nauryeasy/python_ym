@@ -21,7 +21,6 @@ class Order(ApiObject):
         priceBeforeDiscount = None
         count = None
         vat = None
-        partnerWarehouseId = None
 
         def __init__(self, data):
             super().__init__(data)
