@@ -67,31 +67,34 @@ class Client:
 
         return states_prices, recommendations_prices
 
-    def get_product_data(self, campaign_id: int, shop_skus: list[str]) -> list[api_objects.ProductData]:
+    def get_product_data(self, campaign_id: int, shop_skus: list[str] = None) -> list[api_objects.ProductData]:
         """
-        :param shop_skus: List of skus
-        :param campaign_id: Shop id. Can be obtained in your personal account or using the get_campaigns method
-        :return: List of ProductData class objects
+        :param offer_ids: List of Shop SKU
+        :return: List of Product class objects
         """
 
         path_params = {
-            'campaignId': campaign_id
+            'businessId': business_id,
         }
+        query_params = {}
+        data = {} if shop_skus is None else {'shopSkus': shop_skus}
 
-        data = {
-            'shopSkus': shop_skus
-        }
+        result = self.__get_request_post(url=self.__api_config.get_product_endpoint(), data=data, path_params=path_params, query_params=query_params)
+        next_page_token = "not None"
+        products = []
 
-        result = self.__get_request_post(url=self.__api_config.get_productdata_endpoint(), path_params=path_params, data=data)
+        while(next_page_token is not None):
+            next_page_token = result['result'].get('paging', {}).get('nextPageToken', None)
+            result = result['result']['offerMappings']
+            for product in result:
+                products.append(api_objects.Product({**product['offer'], **product['mapping']}))
 
-        result = result['result']['shopSkus']
+            query_params = {
+                'page_token': next_page_token
+            }
+            result = self.__get_request_post(url=self.__api_config.get_product_endpoint(), data=data, path_params=path_params, query_params=query_params)
 
-        products_data = []
-
-        for product_data in result:
-            products_data.append(api_objects.ProductData(product_data))
-
-        return products_data
+        return products
 
     def get_warehouses(self) -> list[api_objects.Warehouse]:
 
